@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html> 
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Inmui</title>
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="jquery-mobile/inmui.min.css" />
+<link rel="stylesheet" href="jquery-mobile/jquery.mobile.icons-1.4.5.min.css" />
+<link rel="stylesheet" href="jquery-mobile/jquery.mobile.structure-1.4.5.min.css" /><script src="jquery-mobile/jquery-1.11.0.min.js"></script> 
+<script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script> 
+
+<script src="cordova.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://dfdbz2tdq3k01.cloudfront.net/js/2.1.0/ortc.js"></script>
+
+<style type="text/css">
+/*Substituindo fundo coloque  .ui-mobile-viewport{  */
+#div_logo{ 
+	position: fixed; 
+	top: 0; 
+	left: 0; 
+	width: 100% !important; 
+	height: 100% !important; 
+	background: url(images/Logo_Ui.png) no-repeat center center fixed !important; 
+	-webkit-background-size: 35%; 
+	-moz-background-size: 35%; 
+	-o-background-size: 35%; 
+	background-size: 35%; 
+	z-index: -1; 
+}
+
+.ui-page { 
+	background:none;
+}
+
+</style>
+<script type="text/javascript">
+        var loadScript = function (url, callback) {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+
+            if (script.readyState) {  //IE
+                script.onreadystatechange = function () {
+                    if (script.readyState == "loaded" || script.readyState == "complete") {
+                        script.onreadystatechange = null;
+                        callback();
+                    }
+                };
+            } else {  //Others
+                script.onload = function () {
+                    callback();
+                };
+            }
+            script.src = url;
+            document.getElementsByTagName("head")[0].appendChild(script);
+        };       
+</script>
+
+<script type="text/javascript">
+        var ortcClient = null,
+            url = 'http://ortc-developers.realtime.co/server/2.1/',
+            applicationKey = 'X4Qz1S',
+            authenticationToken = 'mtnmcpNrerWb',
+            channel = 'my_channel';
+
+        // Log function
+        var Log = function (text) {
+            document.getElementById('taLog').value += "\n" + text;
+        }
+
+        // Sends a message
+        function send() {
+            var message = document.getElementById('txtMessage').value;
+            Log("Message sent to channel: " + channel + ": " + message);
+            ortcClient.send(channel, message);
+        };
+
+        // Displays a message received
+        var onMessage = function (client, channel, message) {
+            Log('Message received from channel ' + channel + ': ' + message);
+        };
+
+        // Creates the client and the connection
+        var createClient = function () {
+            loadOrtcFactory(IbtRealTimeSJType, function (factory, error) {
+                // Checks if we have successfuly created the factory
+                if (error != null) {
+                    console.error(error);
+                }
+                else {
+                    // Creates the factory
+                    ortcClient = factory.createClient();                    
+                    ortcClient.setClusterUrl(url);
+
+                    // Callback for when we're connected
+                    ortcClient.onConnected = function (ortc) {
+                        Log("Connected to Realtime server " + ortcClient.getUrl());
+                        Log("Transport used: " + ortcClient.getProtocol());
+                        ortcClient.subscribe(channel, true, onMessage);
+                    };
+
+                    // Callback for when we're subscribed to a channel
+                    ortcClient.onSubscribed = function (ortc, channel) {
+                        Log("Subscribed channel " + channel);
+                    };
+
+                    // Callback for when we get an exception
+                    ortcClient.onException = function (ortc, exception) {
+                        Log('Exception: ' + exception);
+                    };
+
+                    // Connects to the ORTC server
+                    Log("Connecting...");
+                    ortcClient.connect(applicationKey, authenticationToken);
+                }
+            });
+        };
+
+        $(function () {
+            document.addEventListener("deviceready", function () {
+                 var isAndroid = (navigator.userAgent.match(/Android/i)) == "Android" ? true : false;
+
+                if(isAndroid){
+                    loadScript("script/phonegap-websocket.js",function(){
+                        createClient();
+                    });
+                }else{
+                    createClient();
+                }
+            });
+        });
+
+</script>
+
+</head> 
+<body> 
+<div data-role="page" id="page_init" data-title="INMUI" data-theme="a">
+	
+    <!-- header -->
+	<div data-role="header">
+	</div>
+    
+    <!-- content -->
+	<div data-role="content">
+<div id="dMessage">
+	<input type="text" id="txtMessage" style="width: 100%" />
+	<input type="button" id="btnSendMessage" value="Send Message" onclick="send();" />
+</div>
+<div>
+	<textarea id="taLog" rows="2" cols="20" readonly style="height: 300px; width: 100%"></textarea>
+</div>
+        
+        <div id="div_logo">
+        </div>
+    
+    </div>
+    
+    <!-- footer -->
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+            <ul>
+               <li><a href="#page2" data-icon="user" data-transition="pop" data-theme="b">
+               </a></li>
+               
+               <li><a href="#page3" data-icon="plus" data-transition="slideup" data-theme="b">
+               </a></li>
+               
+               <li><a href="#page4" data-icon="gear" data-transition="flip" data-theme="b">
+               </a></li>
+               
+               <li><a href="#" id= "exit_app" data-icon="power" data-transition="flip" data-theme="b">
+               </a></li>
+            </ul>
+         </div><!-- navbar -->
+	</div><!-- footer -->
+</div><!-- Pagina 1 -->
+
+<!-- Pagina 2 -->
+<div data-role="page" id="page2" data-title="INMUI - FORMULÁRIO" data-theme="a">
+	<div data-role="header">
+    <a href="#page_init" data-role="button" data-icon="home" data-iconpos="notext"></a>
+        <h1> PRIMEIRO TESTE AJAX </h1>
+    
+    <a href="#" id= "sair_app" data-icon="power" data-iconpos="notext" data-transition="flip" data-theme="b"></a>
+        
+    </div>
+    
+	<div data-role="content">
+    
+		<div data-role="fieldcontain">
+        
+            <label for="theName">Escreva seu nome:</label>
+            <input type="text" id="theName" name="theName" value="" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c">
+            
+		</div>
+        
+        <a href="#" role="button" aria-label="button">
+        <span>
+        <span>Chamada Ajax</span>
+        </span>
+        </a>
+        <input id="callAjax" type="button" value="Call Ajax">
+        <div id="resultLog"></div>
+	</div><!-- content -->
+ 
+    <div data-role="footer">
+        <h1>AJAX Demo</h1>
+    </div><!-- footer -->
+</div><!-- Pagina 2 -->
+
+</body>
+</html>
