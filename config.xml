@@ -19,6 +19,8 @@
     </author>
 	
 	<gap:plugin name="com.ququplay.websocket.websocket" version="0.1.0" />
+	<!-- Pushwoosh plugin -->
+    <gap:plugin name="com.pushwoosh.plugins.pushwoosh" source="plugins.cordova.io" />
 		
 	<!-- <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.4.0"> -->
 		<!-- <param name="APP_ID" value="1415656032081293" /> -->
@@ -45,8 +47,7 @@
     <gap:plugin name="org.apache.cordova.media" />
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
-    <gap:plugin name="org.apache.cordova.vibration" />
-    
+    <gap:plugin name="org.apache.cordova.vibration" />  
     
 	<!-- Core Plugin -->	
     <preference name="orientation"                value="default" />        <!-- all: default means both landscape and portrait are enabled -->
@@ -65,5 +66,6 @@
     <preference name="android-installLocation"    value="auto" /> 
     
 	<access origin="*" />
+	<access origin="*.pushwoosh.com"/> <!-- allow pushwoosh service -->
  
 </widget>

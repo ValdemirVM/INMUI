@@ -11,6 +11,10 @@
 
 <script src="cordova.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://dfdbz2tdq3k01.cloudfront.net/js/2.1.0/ortc.js"></script>
+<script type="text/javascript" src="js/PushwooshAndroid.js"></script>
+<script type="text/javascript" src="js/PushwooshiOS.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="PushNotification.js"></script>
 
 <style type="text/css">
 /*Substituindo fundo coloque  .ui-mobile-viewport{  */
@@ -34,6 +38,59 @@
 
 </style>
 <script type="text/javascript">
+
+//BOTÃO SAIR OU VOLTAR
+function onBackPress(e) {
+	if($.mobile.activePage.is("#page_init")){
+		e.preventDefault();
+		
+		sair = confirm("SAIR?");
+		if (sair){
+			navigator.app.exitApp();
+		}
+		
+    }else{
+        navigator.app.backHistory();
+
+    }
+}
+function onLoad_back() {
+    document.addEventListener("deviceready", onDeviceReady_back, false);
+}
+function onDeviceReady_back() {
+	document.getElementById("exit_app").addEventListener("click", onBackPress, false);
+}
+
+//Caminho raiz android phonegap
+function getPhoneGapPath() { 
+    var path = window.location.pathname;
+    path = path.substr( path, path.length - 10 );
+    return 'file://' + path;
+
+};
+
+//AUDIO
+function playAudioId(id) { //Executar audio com botões chamando os ids dos audios	
+    var audioElement = document.getElementById(id);
+    var url = getPhoneGapPath() + audioElement.getAttribute('src');
+    var my_media = new Media(url
+            // success callback
+             //,function () { console.log("playAudioId():Audio Success"); }
+            // error callback
+             //,function (err) { console.log("playAudioId():Audio Error: " + err); }
+    );
+           // Play audio
+    my_media.play();
+}
+
+function playAudio(name_sound) { //Executar audio
+	var som = new Media(getPhoneGapPath() + name_sound);
+	//var som = new Media(getPhoneGapPath() + name_sound, this.onSuccess, this.mediaError);
+	som.play();
+	//som.release();// libera som da memória
+}
+
+//WEBSOCKETS
         var loadScript = function (url, callback) {
             var script = document.createElement("script");
             script.type = "text/javascript";
@@ -52,10 +109,18 @@
             }
             script.src = url;
             document.getElementsByTagName("head")[0].appendChild(script);
-        };       
+        };     
 </script>
 
 <script type="text/javascript">
+
+function resize_text_websockets () {
+	alturaTela = $(window).height(); //Altura da tela
+	document.getElementById('taLog').style.height = Math.ceil(alturaTela/2) +'px'; //Define altura
+	//document.getElementById('taLog').style.height = document.getElementById('taLog').scrollHeight+'px'; //Aumenta altura a medida que insere texto
+	document.getElementById('taLog').scrollTop = document.getElementById('taLog').scrollHeight;
+}
+
         var ortcClient = null,
             url = 'http://ortc-developers.realtime.co/server/2.1/',
             applicationKey = 'X4Qz1S',
@@ -77,6 +142,9 @@
         // Displays a message received
         var onMessage = function (client, channel, message) {
             Log('Message received from channel ' + channel + ': ' + message);
+			playAudio("sounds/do.mp3");
+			resize_text_websockets();      
+           			
         };
 
         // Creates the client and the connection
@@ -120,15 +188,47 @@
                  var isAndroid = (navigator.userAgent.match(/Android/i)) == "Android" ? true : false;
 
                 if(isAndroid){
-                    loadScript("script/phonegap-websocket.js",function(){
+                    loadScript("phonegap-websocket.js",function(){
                         createClient();
+						resize_text_websockets ();
+						onLoad_back();
                     });
                 }else{
-                    createClient();
+                       createClient();
+					   resize_text_websockets ();
+					   onLoad_back();
                 }
             });
         });
 
+	//NOTIFICAÇÃO NATIVA
+	// alert dialog dismissed
+	function alertDismissed() {
+		// do something
+	}
+ 	// Show a custom alert
+   function showAlert() {
+        navigator.notification.alert(
+            'Isso é uma notificação!',  // message
+			alertDismissed,         // callback
+            'INMUI',            // title
+            'Ok'                  // buttonName
+        );
+    }
+    // Beep three times
+    function playBeep() {
+        navigator.notification.beep(3);
+    }
+    // Vibrate for 2 seconds
+    function vibrate() {
+        navigator.notification.vibrate(2000);
+    }
+	
+//INICIALIZA FUNÇÕES
+app.initialize(); //Do push
+$(document).ready(function() {	
+	init_push();//Iniciaaliza função de notificação
+});
 </script>
 
 </head> 
@@ -146,7 +246,19 @@
 	<input type="button" id="btnSendMessage" value="Send Message" onclick="send();" />
 </div>
 <div>
-	<textarea id="taLog" rows="2" cols="20" readonly style="height: 300px; width: 100%"></textarea>
+	<textarea id="taLog" readonly ></textarea>
+    
+    <div>    
+	<audio id="successSound" src="sounds/do.mp3" type="audio/mpeg" ></audio>
+	<audio id="errorSound" src="sounds/do.ogg" type="audio/ogg" ></audio>
+  
+	<button onclick="playAudioId('successSound')">Play successSound local</button>
+	<button onclick="playAudioId('errorSound')">Play errorSoundlocal</button>
+    <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p>
+    <p><a href="#" onclick="playBeep(); return false;">Play Beep</a></p>
+    <p><a href="#" onclick="vibrate(); return false;">Vibrate</a></p>
+    </div>
+    
 </div>
         
         <div id="div_logo">
