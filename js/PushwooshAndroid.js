@@ -34,7 +34,8 @@ function registerPushwooshAndroid() {
 			}
 
 			//and show alert
-			alert(title);
+			//alert(title);//Original
+			alert("INMUI");
 
 			//stopping geopushes
 			//pushNotification.stopGeoPushes();
@@ -42,20 +43,21 @@ function registerPushwooshAndroid() {
 	);
 
 	//initialize Pushwoosh with projectid: "GOOGLE_PROJECT_ID", appid : "PUSHWOOSH_APP_ID". This will trigger all pending push notifications on start.
-	pushNotification.onDeviceReady({ projectid: "559211334107", appid : "559211334107" });
+	pushNotification.onDeviceReady({ projectid: "559211334107", appid : "EDA0C-39DA0" });
 	//Inseri o appid do phonegap
 
 	//register for push notifications
 	pushNotification.registerDevice(
 		function(token)
 		{
-			alert(token);
+			//alert(token);
+			//$("#txtMessage").val(token);
 			//callback when pushwoosh is ready
 			onPushwooshAndroidInitialized(token);
 		},
 		function(status)
 		{
-			alert("failed to register: " +  status);
+			//alert("failed to register: " +  status);
 		    console.warn(JSON.stringify(['failed to register ', status]));
 		}
 	);
@@ -96,8 +98,8 @@ function onPushwooshAndroidInitialized(pushToken)
 	 
 
 	//set multi notificaiton mode
-	//pushNotification.setMultiNotificationMode();
-	//pushNotification.setEnableLED(true);
+	pushNotification.setMultiNotificationMode();
+	pushNotification.setEnableLED(true);
 	
 	//set single notification mode
 	//pushNotification.setSingleNotificationMode();

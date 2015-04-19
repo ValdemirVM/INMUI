@@ -218,7 +218,7 @@ var app = {
         initPushwoosh(); //Função de push
 		loadScript("phonegap-websocket.js",function(){ //websockets
 			createClient();
-			resize_text_websockets ();		
+			resize_text_websockets (); //Para redimencionar textarea que recebe os textos		
 		});
 		onLoad_back(); //BT SAIR
         app.receivedEvent('deviceready');
@@ -235,7 +235,6 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
-
 
 //INICIALIZA FUNÇÕES
 app.initialize(); 

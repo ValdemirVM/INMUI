@@ -11,9 +11,9 @@
 
 <script src="cordova.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://dfdbz2tdq3k01.cloudfront.net/js/2.1.0/ortc.js"></script>
+<script type="text/javascript" src="PushNotification.js"></script>
 <script type="text/javascript" src="js/PushwooshAndroid.js"></script>
 <script type="text/javascript" src="js/PushwooshiOS.js"></script>
-<script type="text/javascript" src="PushNotification.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 
 <style type="text/css">
@@ -38,6 +38,15 @@
 
 </style>
 <script type="text/javascript">
+	//Função Carregamento
+	function showLoading_Mobile(){ 
+		$.mobile.loading("show");
+	}
+	function hideLoading_Mobile(){
+		$.mobile.loading("hide");
+	}
+
+
 </script>
 
 </head> 
@@ -66,6 +75,8 @@
     <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p>
     <p><a href="#" onclick="playBeep(); return false;">Play Beep</a></p>
     <p><a href="#" onclick="vibrate(); return false;">Vibrate</a></p>
+    <p><a href="#" onclick="showLoading_Mobile(); return false;">Show Loading</a></p>
+    <p><a href="#" onclick="hideLoading_Mobile(); return false;">Hide Loading</a></p>
     </div>
     
 </div>
