@@ -6,10 +6,16 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="jquery-mobile/inmui.min.css" />
 <link rel="stylesheet" href="jquery-mobile/jquery.mobile.icons-1.4.5.min.css" />
-<link rel="stylesheet" href="jquery-mobile/jquery.mobile.structure-1.4.5.min.css" /><script src="jquery-mobile/jquery-1.11.0.min.js"></script> 
+<link rel="stylesheet" href="jquery-mobile/jquery.mobile.structure-1.4.5.min.css" />
+<script src="jquery-mobile/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript">
+    $(document).bind("mobileinit", function() {
+        $.mobile.buttonMarkup.hoverDelay = 0; //Tap rapido
+    });    
+</script>
 <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script> 
-
 <script src="cordova.js" type="text/javascript"></script>
+<script type="text/javascript" src="StreamingMedia.js"></script>
 <script type="text/javascript" src="http://dfdbz2tdq3k01.cloudfront.net/js/2.1.0/ortc.js"></script>
 <script type="text/javascript" src="PushNotification.js"></script>
 <script type="text/javascript" src="js/PushwooshAndroid.js"></script>
@@ -32,20 +38,30 @@
 	z-index: -1; 
 }
 
-.ui-page { 
+.ui-page{ 
 	background:none;
 }
 
 </style>
 <script type="text/javascript">
-	//Função Carregamento
-	function showLoading_Mobile(){ 
-		$.mobile.loading("show");
-	}
-	function hideLoading_Mobile(){
-		$.mobile.loading("hide");
-	}
+var audioUrl = "http://www.inmui.hol.es/uploads/Quando_a_Mare_Encher.mp3";
 
+// Play an audio file (not recommended, since the screen will be plain black)
+window.plugins.streamingMedia.playAudio(audioUrl);
+
+  // Play an audio file with options (all options optional)
+var options = {
+    bgColor: "#FFFFFF",
+    bgImage: "res/icon/android/icon-72-hdpi.png",
+    bgImageScale: "fit",
+    successCallback: function() {
+      console.log("Player closed without error.");
+    },
+    errorCallback: function(errMsg) {
+      console.log("Error! " + errMsg);
+    }
+};
+window.plugins.streamingMedia.playAudio(audioUrl, options);
 
 </script>
 
@@ -53,90 +69,129 @@
 <body> 
 <div data-role="page" id="page_init" data-title="INMUI" data-theme="a">
 	
-    <!-- header -->
 	<div data-role="header">
-	</div>
+    
+		<a href="#painel_lateral" data-role="button" data-iconpos="notext" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-grid"> menu </a>   
+		<a href="#" id="exit_app" data-role="button" data-iconpos="notext" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-right ui-icon-power">&nbsp;&nbsp; sair </a>
+    
+	</div><!-- header -->
     
     <!-- content -->
 	<div data-role="content">
-<div id="dMessage">
-	<input type="text" id="txtMessage" style="width: 100%" />
-	<input type="button" id="btnSendMessage" value="Send Message" onclick="send();" />
-</div>
-<div>
-	<textarea id="taLog" readonly ></textarea>
-    
-    <div>    
-	<audio id="successSound" src="sounds/do.mp3" type="audio/mpeg" ></audio>
-	<audio id="errorSound" src="sounds/do.ogg" type="audio/ogg" ></audio>
-  
-	<button onclick="playAudioId('successSound')">Play successSound local</button>
-	<button onclick="playAudioId('errorSound')">Play errorSoundlocal</button>
-    <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p>
-    <p><a href="#" onclick="playBeep(); return false;">Play Beep</a></p>
-    <p><a href="#" onclick="vibrate(); return false;">Vibrate</a></p>
-    <p><a href="#" onclick="showLoading_Mobile(); return false;">Show Loading</a></p>
-    <p><a href="#" onclick="hideLoading_Mobile(); return false;">Hide Loading</a></p>
-    </div>
-    
-</div>
-        
+
         <div id="div_logo">
         </div>
     
-    </div>
+    </div><!-- content -->
     
     <!-- footer -->
 	<div data-role="footer" data-position="fixed">
-		<div data-role="navbar">
-            <ul>
-               <li><a href="#page2" data-icon="user" data-transition="pop" data-theme="b">
-               </a></li>
-               
-               <li><a href="#page3" data-icon="plus" data-transition="slideup" data-theme="b">
-               </a></li>
-               
-               <li><a href="#page4" data-icon="gear" data-transition="flip" data-theme="b">
-               </a></li>
-               
-               <li><a href="#" id= "exit_app" data-icon="power" data-transition="flip" data-theme="b">
-               </a></li>
-            </ul>
-         </div><!-- navbar -->
 	</div><!-- footer -->
+    
+<!-- /painel_lateral -->  
+<div data-role="panel" id="painel_lateral">
+		<p><a href="#" data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-star">show</a></p>
+		<p><a href="#page3" data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-gear">compor</a></p>
+		<p><a href="#" data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-info">info</a></p>
+        <p><a href="#" id="exit_app" data-role="button" data-iconpos="notext" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-power">
+        sair
+        </a></p>
+   	<br><br>
+    <div style="text-align:center;">	
+    <img src="icon.png" alt="" style="width:70%;"/>
+    </div> 
+    </div><!-- menu lateral -->
+</div><!-- painel_lateral -->
+
 </div><!-- Pagina 1 -->
 
+
+
+<!---------------------------------------------------------------------------------->
 <!-- Pagina 2 -->
-<div data-role="page" id="page2" data-title="INMUI - FORMULÁRIO" data-theme="a">
+<div data-role="page" id="page3" data-title="INMUI - COMPOR" data-theme="a">
 	<div data-role="header">
-    <a href="#page_init" data-role="button" data-icon="home" data-iconpos="notext"></a>
-        <h1> PRIMEIRO TESTE AJAX </h1>
+		
+        <a href="#painel_lateral" data-transition="pop" data-role="button" data-iconpos="notext" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-grid"> menu </a>
     
-    <a href="#" id= "sair_app" data-icon="power" data-iconpos="notext" data-transition="flip" data-theme="b"></a>
-        
     </div>
     
-	<div data-role="content">
-    
-		<div data-role="fieldcontain">
+	<div data-role="content" data-="true">
+    <br><br>
+		<form>
         
-            <label for="theName">Escreva seu nome:</label>
-            <input type="text" id="theName" name="theName" value="" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
+            Título do Show :<br>
+            <input type="text" id="titulo" name="titulo" value="">
             
-		</div>
+		</form>
         
-        <a href="#" role="button" aria-label="button">
-        <span>
-        <span>Chamada Ajax</span>
-        </span>
-        </a>
-        <input id="callAjax" type="button" value="Call Ajax">
-        <div id="resultLog"></div>
+        
 	</div><!-- content -->
  
     <div data-role="footer">
-        <h1>AJAX Demo</h1>
     </div><!-- footer -->
+
+<!-- /painel_lateral -->  
+<div data-role="panel" id="painel_lateral">
+		<p><a href="#" data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-star">show</a></p>
+		<p><a href="#page3" data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-gear">compor</a></p>
+		<p><a href="#" data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-info">info</a></p>
+        <p><a href="#" id="exit_app2" data-role="button" data-iconpos="notext" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-power">
+        sair
+        </a></p>
+   	<br><br>
+    <div style="text-align:center;">	
+    <img src="icon.png" alt="" style="width:70%;"/>
+    </div> 
+    </div><!-- menu lateral -->
+</div><!-- painel_lateral -->
+
 </div><!-- Pagina 2 -->
 
 </body>

@@ -16,7 +16,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ 
+//Check o tipo de conexão
+function checkConnection() {
+            var networkState = navigator.connection.type;
 
+            var states = {};
+            states[Connection.UNKNOWN]  = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI]     = 'WiFi connection';
+            states[Connection.CELL_2G]  = 'Cell 2G connection';
+            states[Connection.CELL_3G]  = 'Cell 3G connection';
+            states[Connection.CELL_4G]  = 'Cell 4G connection';
+            states[Connection.CELL]     = 'Cell generic connection';
+            states[Connection.NONE]     = 'No network connection';
+
+            //alert('Connection type: ' + states[networkState]);		
+}
 
 //BOTÃO SAIR OU VOLTAR
 function onBackPress(e) {
@@ -29,8 +45,8 @@ function onBackPress(e) {
 		}
 		
     }else{
-        navigator.app.backHistory();
-
+        //navigator.app.backHistory();
+		navigator.app.exitApp();
     }
 }
 function onLoad_back() {
@@ -38,6 +54,21 @@ function onLoad_back() {
 }
 function onDeviceReady_back() {
 	document.getElementById("exit_app").addEventListener("click", onBackPress, false);
+	document.getElementById("exit_app2").addEventListener("click", onBackPress, false);
+}
+
+//Função Carregamento
+function showLoading_Mobile(){ 
+		$.mobile.loading( 'show', {
+			text: "Aguarde...",
+			textVisible: true,
+			theme: "a",
+			textonly: false,
+			html: ""
+		});
+}
+function hideLoading_Mobile(){
+		$.mobile.loading('hide');
 }
 
 //Caminho raiz android phonegap
@@ -208,6 +239,7 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+		document.addEventListener("offline", this.onOffline, false);
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
@@ -215,6 +247,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() { //Insira aqui todas as funções p inicializar
+		$.mobile.buttonMarkup.hoverDelay = 0; //Toques
         initPushwoosh(); //Função de push
 		loadScript("phonegap-websocket.js",function(){ //websockets
 			createClient();
@@ -222,6 +255,10 @@ var app = {
 		});
 		onLoad_back(); //BT SAIR
         app.receivedEvent('deviceready');
+    },
+	onOffline: function() { 
+		alert("sem conexão");
+		navigator.app.exitApp();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -238,7 +275,3 @@ var app = {
 
 //INICIALIZA FUNÇÕES
 app.initialize(); 
-
-$(document).ready(function() {	
-	//init_push();//Iniciaaliza função de notificação
-}); 
