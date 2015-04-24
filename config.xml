@@ -76,6 +76,7 @@
     
 	<access origin="*" />
 	<access origin="*.pushwoosh.com"/> <!-- allow pushwoosh service -->
-	<access origin="inmui.hol.es"/> <!-- streaming -->
+	<access origin="myradiostream.com"/> <!-- streaming -->
+	<access origin="devgeeks" subdomains="true" />
  
 </widget>
