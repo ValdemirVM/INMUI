@@ -17,6 +17,38 @@
  * under the License.
  */
  
+//$.mobile.activePage[0].id //id da pagina atual
+//pagina atual (fromPage)
+//nova pagina(toPage)
+// $( '#aboutPage' ).on( 'pageinit',function(event){  //na inicialização de pagina
+//  alert( 'This page was just enhanced by jQuery Mobile!' );
+//});
+//
+
+//Acelera toque
+$.event.special.tap = {
+  setup: function() {
+    var self = this,
+      $self = $(self);
+
+    // Bind touch start
+    $self.on('touchstart', function(startEvent) {
+      // Save the target element of the start event
+      var target = startEvent.target;
+
+     // Quando um toque começa, vincular um manipulador touchend exatamente uma vez,
+      $self.one('touchend', function(endEvent) {
+       // Quando o final toque fogos de eventos, verificar se o alvo do
+         // Fim do toque é o mesmo que o alvo do começo, e se
+         // Então, disparar um clique.
+        if (target == endEvent.target) {
+          $.event.simulate('tap', self, endEvent);
+        }
+      });
+    });
+  }
+};
+ 
 //Check o tipo de conexão
 function checkConnection() {
             var networkState = navigator.connection.type;
@@ -247,7 +279,6 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() { //Insira aqui todas as funções p inicializar
-		$.mobile.buttonMarkup.hoverDelay = 0; //Toques
         initPushwoosh(); //Função de push
 		loadScript("phonegap-websocket.js",function(){ //websockets
 			createClient();
@@ -255,6 +286,7 @@ var app = {
 		});
 		onLoad_back(); //BT SAIR
         app.receivedEvent('deviceready');
+		
     },
 	onOffline: function() { 
 		alert("sem conexão");
