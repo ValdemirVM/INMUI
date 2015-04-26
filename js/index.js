@@ -267,10 +267,10 @@ var app = {
 		   
 		//Carrega audio do show
 		if($.mobile.activePage[0].id== "page_init"){
-			html5audio.play();
+			//html5audio.play();
 			return false;
 		}else{
-			html5audio.stop();
+			//html5audio.stop();
 			return false;
 		}
 		
