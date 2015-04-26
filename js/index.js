@@ -247,8 +247,6 @@ var app = {
     bindEvents: function() {
 		document.addEventListener("offline", this.onOffline, false);
         document.addEventListener('deviceready', this.onDeviceReady, false);
-		document.addEventListener("touchmove", function (e) { e.preventDefault(); return false; }, false);
-		document.addEventListener("touchstart", function (e) { e.preventDefault(); return false; }, false);	
     },
     // deviceready Event Handler
     //
@@ -274,59 +272,6 @@ var app = {
 			html5audio.stop();
 			return false;
 		}
-			
-		
-		function do_ui() {
-			document.getElementById("do_ui").className = "touched";
-            LowLatencyAudio.play('do');
-        } 
-		function dosu() {
-			document.getElementById("dosu").className = "touched";
-            LowLatencyAudio.play('dosu');
-        } 
-		function re() {
-			document.getElementById("re").className = "touched";
-            LowLatencyAudio.play('re');
-        } 
-		function resu() {
-			document.getElementById("resu").className = "touched";
-            LowLatencyAudio.play('resu');
-        } 
-		function mi() {
-			document.getElementById("mi").className = "touched";
-            LowLatencyAudio.play('mi');
-        } 
-		function fa() {
-			document.getElementById("fa").className = "touched";
-            LowLatencyAudio.play('fa');
-        } 
-		function fasu() {
-			document.getElementById("fasu").className = "touched";
-            LowLatencyAudio.play('fasu');
-        } 
-		function sol() {
-			document.getElementById("sol").className = "touched";
-            LowLatencyAudio.play('sol');
-        } 
-		function solsu() {
-			document.getElementById("solsu").className = "touched";
-            LowLatencyAudio.play('solsu');
-        } 
-		function la() {
-			document.getElementById("la").className = "touched";
-            LowLatencyAudio.play('la');
-        } 
-		function lasu() {
-			document.getElementById("lasu").className = "touched";
-            LowLatencyAudio.play('lasu');
-        } 
-		function si() {
-			document.getElementById("si").className = "touched";
-            LowLatencyAudio.play('si');
-        }
-		function touchend( event ) {
-            event.target.className = "";
-        } 
 		
     },
 	onOffline: function() { 
