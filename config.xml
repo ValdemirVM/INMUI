@@ -22,6 +22,8 @@
 	<gap:plugin name="com.ququplay.websocket.websocket" version="0.1.0" />
 	<!-- Push plugin -->
     <gap:plugin name="com.pushwoosh.plugins.pushwoosh" source="plugins.cordova.io" />
+	<!-- Audio -->
+	<gap:plugin name="com.rjfun.cordova.plugin.lowlatencyaudio" version="1.1.3" />
 	
 	<!-- <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.4.0"> -->
 		<!-- <param name="APP_ID" value="1415656032081293" /> -->

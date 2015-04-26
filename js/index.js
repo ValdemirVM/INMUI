@@ -68,7 +68,7 @@ function checkConnection() {
 
 //BOTÃO SAIR OU VOLTAR
 function onBackPress(e) {
-	if($.mobile.activePage.is("#page_init")){
+	//if($.mobile.activePage.is("#page_init")){
 		e.preventDefault();
 		
 		sair = confirm("SAIR?");
@@ -76,17 +76,15 @@ function onBackPress(e) {
 			navigator.app.exitApp();
 		}
 		
-    }else{
+   // }else{
         //navigator.app.backHistory();
-		navigator.app.exitApp();
-    }
+    //}
 }
 function onLoad_back() {
     document.addEventListener("deviceready", onDeviceReady_back, false);
 }
 function onDeviceReady_back() {
-	document.getElementById("exit_app").addEventListener("click", onBackPress, false);
-	document.getElementById("exit_app2").addEventListener("click", onBackPress, false);
+	document.getElementsByClassName("ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-power").addEventListener("click", onBackPress, false);
 }
 
 //Função Carregamento
@@ -273,19 +271,97 @@ var app = {
     bindEvents: function() {
 		document.addEventListener("offline", this.onOffline, false);
         document.addEventListener('deviceready', this.onDeviceReady, false);
+		document.addEventListener("touchmove", function (e) { e.preventDefault(); return false; }, false);
+		document.addEventListener("touchstart", function (e) { e.preventDefault(); return false; }, false);	
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() { //Insira aqui todas as funções p inicializar
+		app.receivedEvent('deviceready');
+		
         initPushwoosh(); //Função de push
+		
 		loadScript("phonegap-websocket.js",function(){ //websockets
 			createClient();
 			resize_text_websockets (); //Para redimencionar textarea que recebe os textos		
 		});
+		
 		onLoad_back(); //BT SAIR
-        app.receivedEvent('deviceready');
+		   
+		//Carrega audio do show
+		if($.mobile.activePage[0].id== "page_init"){
+			html5audio.play();
+			return false;
+		}else{
+			html5audio.stop();
+			return false;
+		}
+			LowLatencyAudio.preloadFX('do', 'sounds/do.mp3');
+            LowLatencyAudio.preloadFX('dosu', 'sounds/dosu.mp3');
+			LowLatencyAudio.preloadFX('re', 'sounds/re.mp3');
+            LowLatencyAudio.preloadFX('resu', 'sounds/resu.mp3');
+			LowLatencyAudio.preloadFX('mi', 'sounds/mi.mp3');
+            LowLatencyAudio.preloadFX('fa', 'sounds/fa.mp3');
+			LowLatencyAudio.preloadFX('fasu', 'sounds/fasu.mp3');
+			LowLatencyAudio.preloadFX('sol', 'sounds/sol.mp3');
+            LowLatencyAudio.preloadFX('solsu', 'sounds/solsu.mp3');
+			LowLatencyAudio.preloadFX('la', 'sounds/la.mp3');
+            LowLatencyAudio.preloadFX('lasu', 'sounds/lasu.mp3');
+			LowLatencyAudio.preloadFX('si', 'sounds/si.mp3');  
+		
+		function do_ui() {
+			document.getElementById("do_ui").className = "touched";
+            LowLatencyAudio.play('do');
+        } 
+		function dosu() {
+			document.getElementById("dosu").className = "touched";
+            LowLatencyAudio.play('dosu');
+        } 
+		function re() {
+			document.getElementById("re").className = "touched";
+            LowLatencyAudio.play('re');
+        } 
+		function resu() {
+			document.getElementById("resu").className = "touched";
+            LowLatencyAudio.play('resu');
+        } 
+		function mi() {
+			document.getElementById("mi").className = "touched";
+            LowLatencyAudio.play('mi');
+        } 
+		function fa() {
+			document.getElementById("fa").className = "touched";
+            LowLatencyAudio.play('fa');
+        } 
+		function fasu() {
+			document.getElementById("fasu").className = "touched";
+            LowLatencyAudio.play('fasu');
+        } 
+		function sol() {
+			document.getElementById("sol").className = "touched";
+            LowLatencyAudio.play('sol');
+        } 
+		function solsu() {
+			document.getElementById("solsu").className = "touched";
+            LowLatencyAudio.play('solsu');
+        } 
+		function la() {
+			document.getElementById("la").className = "touched";
+            LowLatencyAudio.play('la');
+        } 
+		function lasu() {
+			document.getElementById("lasu").className = "touched";
+            LowLatencyAudio.play('lasu');
+        } 
+		function si() {
+			document.getElementById("si").className = "touched";
+            LowLatencyAudio.play('si');
+        }
+		function touchend( event ) {
+            event.target.className = "";
+        } 
 		
     },
 	onOffline: function() { 
