@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html> 
+<!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -16,7 +16,6 @@
 <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script> 
 <script src="cordova.js" type="text/javascript"></script>
 <script type="text/javascript" charset="utf-8" src="html5audio.js"></script>
-<script type="text/javascript" charset="utf-8" src="LowLatencyAudio.js"></script>
 <script type="text/javascript" src="http://dfdbz2tdq3k01.cloudfront.net/js/2.1.0/ortc.js"></script>
 <script type="text/javascript" src="PushNotification.js"></script>
 <script type="text/javascript" src="js/PushwooshAndroid.js"></script>
@@ -43,20 +42,32 @@
 	background:none;
 }
 
-#bts_sounds{}
-#bts_sounds div{
-	position:absolute;
-	width: 20%;
-	height: 20%;
+.bts_sounds{
+	float:left; 
+	width: 40%;
+	height: 32%;
+	padding:1% 0% 1% 0%;
+	margin:2% 2% 2% 2%;
 	border-radius: 20px;
-	border: 5px solid rgba(50,50,50,.5);
-	background-color:rgba(255,140,0,.8);  
-	font-family: 'Monoton', cursive;
-	font-size: 50pt;
+	border-left:8px solid rgba(78,74,73,0.95);
+	border-top:8px solid rgba(78,74,73,0.95);
+	border-right:7px solid rgba(61,59,58,0.95);
+	border-bottom:7px solid rgba(61,59,58,0.95);
+	background-color:rgba(73,71,70,0.95);  
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+	font-size: 130%;
+	text-align:center;
+	color:#FFA600;
+	font-weight:bold;
 }
+
+/*#bts_sounds div:hover{}*/
 .touched {
-	background-color:rgba(255,140,0,.6); 
-	border: 5px solid rgba(50,50,50,.8); 
+	background-color:rgba(175,97,1,0.95); 
+	border-left: 8px solid rgba(160,89,0,0.95); 
+	border-top: 8px solid rgba(160,89,0,0.95);
+	border-right: 7px solid rgba(138,76,0,0.95);
+	border-bottom: 7px solid rgba(138,76,0,0.95);
 }
 
 </style>
@@ -76,9 +87,8 @@
     
     <!-- content -->
 	<div data-role="content">
-    <br><br>
+    <br>
     
-		<h2>Example HTML5 Audio Streamer app</h2>
   	  <div id="playcontrols">
 		  <a href="#" id="playbutton" onClick="html5audio.play();return false;"><img src="images/playbutton.png" /></a>
 		  <a href="#" id="activityindicator" onClick="html5audio.stop();return false;"><img src="images/ajax-loader8.gif" /></a>
@@ -92,20 +102,20 @@
 		  textPosition = document.getElementById('textposition');
 	  </script>
       <br><br>
-      <div id="bts_sounds">
-      <div id="do" ontouchstart="do_ui()" ontouchend="touchend(event)">DO</div>
-      <div id="dosu" ontouchstart="dosu();" ontouchend="touchend(event)">DO#</div>
-      <div id="re" ontouchstart="re();" ontouchend="touchend(event)">RE</div>
-      <div id="resu" ontouchstart="resu();" ontouchend="touchend(event)">RE#</div>
-      <div id="mi" ontouchstart="mi();" ontouchend="touchend(event)">MI</div>
-      <div id="fa" ontouchstart="fa();" ontouchend="touchend(event)">FA</div>
-      <div id="fasu" ontouchstart="fasu();" ontouchend="touchend(event)">FA#</div>
-      <div id="sol" ontouchstart="sol();" ontouchend="touchend(event)">SOL</div>
-      <div id="solsu" ontouchstart="solsu();" ontouchend="touchend(event)">SOL#</div>
-      <div id="la" ontouchstart="la();" ontouchend="touchend(event)">LA</div>
-      <div id="lasu" ontouchstart="lasu();" ontouchend="touchend(event)">LA#</div>
-      <div id="si" ontouchstart="si();" ontouchend="touchend(event)">SI</div>
-      </div>
+      
+      <div id="do" class="bts_sounds" ontouchstart="app.play("do")" ontouchend="app.touchEnd(event)">DO</div>
+      <div id="dosu" class="bts_sounds" ontouchstart="app.play("dosu");" ontouchend="app.touchEnd(event)">DO#</div>
+      <div id="re" class="bts_sounds" ontouchstart="app.play("re");" ontouchend="app.touchEnd(event)">RE</div>
+      <div id="resu" class="bts_sounds" ontouchstart="app.play("resu");" ontouchend="app.touchEnd(event)">RE#</div>
+      <div id="mi" class="bts_sounds" ontouchstart="app.play("mi");" ontouchend="app.touchEnd(event)">MI</div>
+      <div id="fa" class="bts_sounds" ontouchstart="app.play("fa");" ontouchend="app.touchEnd(event)">FA</div>
+      <div id="fasu" class="bts_sounds" ontouchstart="app.play("fasu");" ontouchend="app.touchEnd(event)">FA#</div>
+      <div id="sol" class="bts_sounds" ontouchstart="app.play("sol");" ontouchend="app.touchEnd(event)">SOL</div>
+      <div id="solsu" class="bts_sounds" ontouchstart="app.play("solsu");" ontouchend="app.touchEnd(event)">SOL#</div>
+      <div id="la" class="bts_sounds" ontouchstart="app.play("la");" ontouchend="app.touchEnd(event)">LA</div>
+      <div id="lasu" class="bts_sounds" ontouchstart="app.play("lasu");" ontouchend="app.touchEnd(event)">LA#</div>
+      <div id="si" class="bts_sounds" ontouchstart="app.play("si");" ontouchend="app.touchEnd(event)">SI</div>
+      
  
 <div id="div_logo">
 </div>
@@ -132,8 +142,6 @@
 </div><!-- painel_lateral -->
 
 </div><!-- Pagina 1 -->
-
-
 
 <!---------------------------------------------------------------------------------->
 <!-- Pagina 2 -->
