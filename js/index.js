@@ -274,24 +274,72 @@ var app = {
 			return false;
 		}
 		
-		//Carrega audios		
-		if( window.plugins && window.plugins.LowLatencyAudio ) {
-
-			window.plugins.LowLatencyAudio.preloadFX('sounds/do.mp3', 'sounds/do.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/dosu.mp3', 'sounds/dosu.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/re.mp3', 'sounds/re.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/resu.mp3', 'sounds/resu.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/mi.mp3', 'sounds/mi.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/fa.mp3', 'sounds/fa.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/fasu.mp3', 'sounds/fasu.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/sol.mp3', 'sounds/sol.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/solsu.mp3', 'sounds/solsu.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/la.mp3', 'sounds/la.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/lasu.mp3', 'sounds/lasu.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('sounds/si.mp3', 'sounds/si.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
+			//Carrega audios		
+			LowLatencyAudio.preloadFX('do', 'sounds/do.mp3');
+            LowLatencyAudio.preloadFX('dosu', 'sounds/dosu.mp3');
+			LowLatencyAudio.preloadFX('re', 'sounds/re.mp3');
+            LowLatencyAudio.preloadFX('resu', 'sounds/resu.mp3');
+			LowLatencyAudio.preloadFX('mi', 'sounds/mi.mp3');
+            LowLatencyAudio.preloadFX('fa', 'sounds/fa.mp3');
+			LowLatencyAudio.preloadFX('fasu', 'sounds/fasu.mp3');
+			LowLatencyAudio.preloadFX('sol', 'sounds/sol.mp3');
+            LowLatencyAudio.preloadFX('solsu', 'sounds/solsu.mp3');
+			LowLatencyAudio.preloadFX('la', 'sounds/la.mp3');
+            LowLatencyAudio.preloadFX('lasu', 'sounds/lasu.mp3');
+			LowLatencyAudio.preloadFX('si', 'sounds/si.mp3'); 
 			
-		}
-		
+		function do_ui() {
+			document.getElementById("do_ui").className = "touched";
+            LowLatencyAudio.play('do');
+        } 
+		function dosu() {
+			document.getElementById("dosu").className = "touched";
+            LowLatencyAudio.play('dosu');
+        } 
+		function re() {
+			document.getElementById("re").className = "touched";
+            LowLatencyAudio.play('re');
+        } 
+		function resu() {
+			document.getElementById("resu").className = "touched";
+            LowLatencyAudio.play('resu');
+        } 
+		function mi() {
+			document.getElementById("mi").className = "touched";
+            LowLatencyAudio.play('mi');
+        } 
+		function fa() {
+			document.getElementById("fa").className = "touched";
+            LowLatencyAudio.play('fa');
+        } 
+		function fasu() {
+			document.getElementById("fasu").className = "touched";
+            LowLatencyAudio.play('fasu');
+        } 
+		function sol() {
+			document.getElementById("sol").className = "touched";
+            LowLatencyAudio.play('sol');
+        } 
+		function solsu() {
+			document.getElementById("solsu").className = "touched";
+            LowLatencyAudio.play('solsu');
+        } 
+		function la() {
+			document.getElementById("la").className = "touched";
+            LowLatencyAudio.play('la');
+        } 
+		function lasu() {
+			document.getElementById("lasu").className = "touched";
+            LowLatencyAudio.play('lasu');
+        } 
+		function si() {
+			document.getElementById("si").className = "touched";
+            LowLatencyAudio.play('si');
+        }
+		function touchend( event ) {
+            event.target.className = "";
+        }  
+			
 		
     },
 	onOffline: function() { 
@@ -299,8 +347,7 @@ var app = {
 		navigator.app.exitApp();
     },
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
-		
+    receivedEvent: function(id) {		
 		
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
@@ -310,15 +357,7 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    },
-	play: function(tocar) { //Tocar audio
-		document.getElementById(tocar).className = 'bts_sounds touched';
-		window.plugins.LowLatencyAudio.play('sounds/' + tocar + '.mp3');
-	},
-    
-	touchEnd: function(event) {//Classe dos bts de audio
-		event.target.className = 'bts_sounds';
-	}
+    }
 };
 
 //INICIALIZA FUNÇÕES
