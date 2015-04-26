@@ -60,7 +60,8 @@ function onLoad_back() {
     document.addEventListener("deviceready", onDeviceReady_back, false);
 }
 function onDeviceReady_back() {
-	document.getElementsByClassName("ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-power").addEventListener("click", onBackPress, false);
+	document.getElementById("exit_app").addEventListener("click", onBackPress, false);
+	document.getElementById("exit_app2").addEventListener("click", onBackPress, false);
 }
 
 //Função Carregamento
@@ -273,13 +274,6 @@ var app = {
 			return false;
 		}
 		
-    },
-	onOffline: function() { 
-		alert("sem conexão");
-		navigator.app.exitApp();
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
 		//Carrega audios		
 		if( window.plugins && window.plugins.LowLatencyAudio ) {
 
@@ -297,6 +291,16 @@ var app = {
 			window.plugins.LowLatencyAudio.preloadFX('sounds/si.mp3', 'sounds/si.mp3', function(msg){}, function(msg){ console.log( 'Error: ' + msg ); });
 			
 		}
+		
+		
+    },
+	onOffline: function() { 
+		alert("sem conexão");
+		navigator.app.exitApp();
+    },
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {
+		
 		
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
