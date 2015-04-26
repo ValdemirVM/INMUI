@@ -25,30 +25,6 @@
 //});
 //
 
-//Acelera toque
-$.event.special.tap = {
-  setup: function() {
-    var self = this,
-      $self = $(self);
-
-    // Bind touch start
-    $self.on('touchstart', function(startEvent) {
-      // Save the target element of the start event
-      var target = startEvent.target;
-
-     // Quando um toque começa, vincular um manipulador touchend exatamente uma vez,
-      $self.one('touchend', function(endEvent) {
-       // Quando o final toque fogos de eventos, verificar se o alvo do
-         // Fim do toque é o mesmo que o alvo do começo, e se
-         // Então, disparar um clique.
-        if (target == endEvent.target) {
-          $.event.simulate('tap', self, endEvent);
-        }
-      });
-    });
-  }
-};
- 
 //Check o tipo de conexão
 function checkConnection() {
             var networkState = navigator.connection.type;
